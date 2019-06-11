@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col s12 m4 l1">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Código" readonly="true" type="number" [(ngModel)]="usuario.idusuario">
+    </mat-form-field>
+  </div>
+  <div class="col s12 m4 l6">
+    <mat-form-field>
+      <input matInput placeholder="Nome" type="text" [(ngModel)]="usuario.nomeusuario">
+    </mat-form-field>
+  </div>
+  <div class="col s12 m6 l2">
+    <mat-form-field>
+      <input matInput placeholder="Username" type="text" [(ngModel)]="usuario.username">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-checkbox [(ngModel)]="usuario.isativo">Ativo</mat-checkbox>
+  </div>
+</div>
+<div class="row footer-btn">
+  <div class="button-row col s12">
+    <button *ngIf="!edit" mat-raised-button color="orange" (click)="salvar()">Salvar</button>
+    <button *ngIf="edit" mat-raised-button color="orange" (click)="atualizar()">Atualizar</button>
+    <button mat-raised-button color="orange" (click)="cancelar()">Cancelar</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12">
+    <mat-table #table [dataSource]="dataSource" matSort class="table-striped">
+
+      <!--Cod Column-->
+      <ng-container matColumnDef="codigo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.idusuario}} </mat-cell>
+      </ng-container>
+
+      <!-- Nome Column -->
+      <ng-container matColumnDef="nome">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nome </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nomeusuario}} </mat-cell>
+      </ng-container>
+
+      <!-- Username Column -->
+      <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+      </ng-container>
+
+      <!-- Ativo Column -->
+      <ng-container matColumnDef="ativo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Ativo </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.isativo? 'SIM' : 'NÃO' }} </mat-cell>
+      </ng-container>
+
+      <!-- Ações -->
+      <ng-container matColumnDef="acao">
+        <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button>
+            <mat-icon matTooltip="Excluir" (click)="excluir(element.idusuario)">delete</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon matTooltip="Editar" (click)="markEdit(element)">edit</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+  </div>
+</div>
